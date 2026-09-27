@@ -96,10 +96,13 @@
                     <p style="font-size: 11px; color: #888; text-align: center;">[ Adsterra Banner Ad Space ]</p>
                 </div>
 
-                <!-- Live Withdraw Ticker -->
+                <!-- Live Withdraw Ticker with Attractive Live Badge -->
                 <div class="live-withdraw-ticker">
-                    <div class="ticker-icon"><i class="fa-solid fa-circle-check"></i></div>
-                    <div class="ticker-text">
+                    <div class="live-badge-wrapper">
+                        <span class="pulse-dot"></span>
+                        <span class="live-text">LIVE</span>
+                    </div>
+                    <div class="ticker-content">
                         <span id="live-user">Riyad Vai</span> সফলভাবে উইথড্র করেছেন <strong id="live-amount">500.00 ৳</strong>
                     </div>
                 </div>
@@ -142,7 +145,7 @@
                     </div>
                     <div class="task-action-right">
                         <span class="task-price">15.00 TK</span>
-                        <button class="start-work-btn" onclick="completeTask()">Start Work</button>
+                        <button class="start-work-btn" onclick="startTaskTimer()">Start Work</button>
                     </div>
                 </div>
 
@@ -157,7 +160,7 @@
                     </div>
                     <div class="task-action-right">
                         <span class="task-price">15.00 TK</span>
-                        <button class="start-work-btn" onclick="completeTask()">Start Work</button>
+                        <button class="start-work-btn" onclick="startTaskTimer()">Start Work</button>
                     </div>
                 </div>
             </div>
@@ -176,7 +179,6 @@
                     </div>
                 </div>
 
-                <!-- ভিডিও বা এড এর লিংক এখানে পরিবর্তন করতে পারবেন -->
                 <div class="video-container">
                     <video width="100%" height="200" controls>
                         <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
@@ -187,7 +189,7 @@
                 <div class="card-box" style="padding: 12px; margin-bottom: 15px;">
                     <h4 style="font-size: 13px; margin-bottom: 8px; color: #1e293b;">গুরুত্বপূর্ণ নিয়মাবলী</h4>
                     <p style="font-size: 11px; color: #475569; margin-bottom: 5px;">১. VPN ব্যবহার নিষেধ: কোনোভাবেই VPN বা Proxy ব্যবহার করে কাজ করা যাবে না। ধরা পড়লে অ্যাকাউন্ট সাসপেন্ড হবে।</p>
-                    <p style="font-size: 11px; color: #475569;">২. সময় মেনে চলুন: টাস্ক ওপেন করার পর নির্দিষ্ট সময় (যেমন ৩০ সেকেন্ড) পুরোটা ওয়েবসাইট বা অ্যাডে অপেক্ষা করতে হবে।</p>
+                    <p style="font-size: 11px; color: #475569;">২. সময় মেনে চলুন: টাস্ক ওপেন করার পর নির্দিষ্ট সময় (যেমন ২০ সেকেন্ড) পুরোটা ওয়েবসাইট বা অ্যাডে অপেক্ষা করতে হবে।</p>
                 </div>
 
                 <button class="primary-btn" onclick="switchTab('tasks')">
@@ -195,16 +197,11 @@
                 </button>
             </div>
 
-            <!-- 4. TOP USERS TAB -->
+            <!-- 4. TOP USERS TAB (Dynamic Real Users Leaderboard) -->
             <div id="tab-top" class="tab-pane">
                 <div class="section-title">লিডারবোর্ড (সেরা ১০ জন ইউজার)</div>
-                <div class="leaderboard-item">
-                    <span>#1 Micro Job BD</span>
-                    <span>1000.00 Tk</span>
-                </div>
-                <div class="leaderboard-item">
-                    <span>#2 Arafat Islam</span>
-                    <span>77.33 Tk</span>
+                <div id="leaderboard-list">
+                    <!-- ডাইনামিক রিয়াল ইউজারদের লিস্ট এখানে জাভাস্ক্রিপ্ট দিয়ে লোড হবে -->
                 </div>
             </div>
 
@@ -242,7 +239,7 @@
                         </button>
                     </div>
 
-                    <!-- Binance Crypto List Dropdown (Hidden by default) -->
+                    <!-- Binance Crypto List Dropdown -->
                     <div id="crypto-select-container" style="display: none; margin-top: 10px;">
                         <label>ক্রিপ্টোকারেন্সি সিলেক্ট করুন</label>
                         <select id="crypto-currency" style="width: 100%; padding: 10px; border: 1px solid #cbd5e0; border-radius: 6px; margin-top: 5px; outline: none; background: white;">
@@ -263,13 +260,6 @@
                     <input type="number" placeholder="কমপক্ষে 400.00">
                     
                     <button class="locked-btn-action"><i class="fa-solid fa-lock"></i> অপশনটি লক করা আছে</button>
-                </div>
-
-                <!-- History Section -->
-                <div class="section-title" style="margin-top: 20px;">হিস্টরি (শেষ ১০টি)</div>
-                <div class="card-box" style="text-align: center; color: #777; padding: 20px;">
-                    <i class="fa-solid fa-file-invoice" style="font-size: 24px; margin-bottom: 8px; color: #cbd5e0;"></i>
-                    <p style="font-size: 12px;">আপনার কোনো উইথড্র হিস্টরি নেই।</p>
                 </div>
             </div>
 
@@ -292,7 +282,7 @@
 
         </div>
 
-        <!-- Bottom Navigation Bar -->
+        <!-- Bottom Navigation Bar (Fixed in One Frame) -->
         <div class="bottom-nav">
             <div class="nav-item active" onclick="switchTab('home')">
                 <i class="fa-solid fa-house"></i>
@@ -312,6 +302,22 @@
             </div>
         </div>
 
+    </div>
+
+    <!-- TASK AD & TIMER MODAL (Start Work Ad Space & 20s Timer) -->
+    <div id="task-modal" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <h3>কাজ চলমান রয়েছে...</h3>
+            <p style="font-size: 12px; color: #64748b; margin: 8px 0;">দয়া করে ২০ সেকেন্ড অপেক্ষা করুন। পাতা ছেড়ে চলে গেলে কাজ বাতিল হবে।</p>
+            
+            <!-- অ্যাডটেরা বা যেকোনো ব্যানার/পপআপ অ্যাড কোড বসানোর নির্দিষ্ট জায়গা -->
+            <div class="modal-ad-box">
+                <p style="font-size: 11px; color: #888;">[ Adsterra Ad Code Space ]</p>
+            </div>
+
+            <div class="timer-display" id="timer-countdown">২০</div>
+            <button id="cancel-task-btn" class="cancel-btn" onclick="cancelTask()">বাতিল করুন</button>
+        </div>
     </div>
 
     <script src="script.js"></script>
