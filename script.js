@@ -1,7 +1,7 @@
 let tg = window.Telegram.WebApp;
 tg.expand(); 
 
-// ব্যাক বাটন লজিক: হোম পেজ ছাড়া অন্য যেকোনো পেজে থাকলে ব্যাক বাটনে ক্লিক করলে হোমে আসবে
+// ব্যাক বাটন লজিক: টেলিগ্রাম অ্যাপের ভেতর হোম পেজ ছাড়া অন্য পেজে গেলে ব্যাক বাটন শো করবে
 function updateBackButtonVisibility() {
     let activeTab = document.querySelector('.tab-pane.active').id;
     if (activeTab !== 'tab-home') {
@@ -174,13 +174,9 @@ function startTaskTimer() {
     }, 1000);
 }
 
-function openDirectAd(type) {
-    // আপনার দেওয়া দুটি ডাইরেক্ট অ্যাড লিংক এখানে যুক্ত করা হলো
-    if (type === 1) {
-        window.open("https://www.profitableratecpmnetwork.com/fe5xzx71?key=8df7b21391b5943a775b558dc91e6fa9", "_blank");
-    } else {
-        window.open("https://www.profitableratecpmnetwork.com/m7xk7v5i?key=29f52e0125fd58eab0283bb2649246b8", "_blank");
-    }
+function openDirectAd() {
+    // ডাইরেক্ট অ্যাড লিংক
+    window.open("https://www.profitableratecpmnetwork.com/fe5xzx71?key=8df7b21391b5943a775b558dc91e6fa9", "_blank");
 }
 
 function cancelTask() {
