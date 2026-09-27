@@ -1,7 +1,7 @@
 let tg = window.Telegram.WebApp;
 tg.expand(); 
 
-// ব্যাক বাটন লজিক: টেলিগ্রাম অ্যাপের ভেতর হোম পেজ ছাড়া অন্য পেজে গেলে ব্যাক বাটন শো করবে
+// ব্যাক বাটন লজিক
 function updateBackButtonVisibility() {
     let activeTab = document.querySelector('.tab-pane.active').id;
     if (activeTab !== 'tab-home') {
@@ -24,20 +24,37 @@ let currentUserId = "5889828569";
 
 if (user) {
     currentUsername = user.first_name;
-    currentUserId = user.id;
+    currentUserId = user.id.toString();
 }
 
 document.getElementById("username").innerText = currentUsername;
 document.getElementById("user-initial").innerText = currentUsername.charAt(0).toUpperCase();
 document.getElementById("user-id").innerText = currentUserId;
 
-document.getElementById("my-refer-link").value = `https://t.me/microjobbd80bot?start=ref_${currentUserId}`;
+let myReferLink = `https://t.me/microjobbd80bot?start=ref_${currentUserId}`;
+document.getElementById("my-refer-link").value = myReferLink;
 
 let allUsers = JSON.parse(localStorage.getItem('micro_job_all_users')) || {};
 
+// ইউজার যদি নতুন হয় অথবা লোকাল স্টোরেজে না থাকে
 if (!allUsers[currentUserId]) {
     let initialBal = 225.00;
     let initialRef = 0;
+
+    // ইউআরএল বা টেলিগ্রাম স্টার্ট প্যারামিটার চেক করা (কেউ রেফার করলে বাড়ানোর জন্য)
+    let urlParams = new URLSearchParams(window.location.search);
+    let startParam = tg.initDataUnsafe.start_param || urlParams.get('start');
+    
+    if (startParam && startParam.startsWith('ref_')) {
+        let referrerId = startParam.replace('ref_', '');
+        if (allUsers[referrerId]) {
+            // রেফারকারীকে ৩০ টাকা এবং ১টি রেফার বাড়িয়ে দেওয়া
+            allUsers[referrerId].balance += 30.00;
+            allUsers[referrerId].referrals += 1;
+        }
+        // নতুন ইউজারের জন্য ২০ টাকা বোনাস
+        initialBal = 20.00;
+    }
 
     allUsers[currentUserId] = {
         name: currentUsername,
@@ -175,7 +192,6 @@ function startTaskTimer() {
 }
 
 function openDirectAd() {
-    // ডাইরেক্ট অ্যাড লিংক
     window.open("https://www.profitableratecpmnetwork.com/fe5xzx71?key=8df7b21391b5943a775b558dc91e6fa9", "_blank");
 }
 
