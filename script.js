@@ -1,6 +1,7 @@
 let tg = window.Telegram.WebApp;
 tg.expand(); 
 
+// টেলিগ্রাম থেকে ইউজারের নাম এবং আইডি অটো শো করা
 let user = tg.initDataUnsafe.user;
 if (user) {
     document.getElementById("username").innerText = user.first_name;
@@ -18,7 +19,7 @@ function switchTab(tabId) {
     });
     document.getElementById('tab-' + tabId).classList.add('active');
 
-    // নিচের মেনুবারের অ্যাক্টিভ স্ট্যাটাস আপডেট
+    // মেনুবারের অ্যাক্টিভ ক্লাস আপডেট
     document.querySelectorAll('.nav-item').forEach(item => {
         item.classList.remove('active');
     });
@@ -47,32 +48,35 @@ function completeTask() {
     }
 }
 
-// ভিডিও দেখার পর রিওয়ার্ড এনাবল হওয়ার লজিক
-const videoElement = document.getElementById('task-video');
-const claimBtn = document.getElementById('claim-reward-btn');
-
-if (videoElement) {
-    videoElement.addEventListener('ended', function() {
-        claimBtn.disabled = false;
-        claimBtn.classList.remove('locked-btn');
-        claimBtn.style.background = "#2563eb";
-        claimBtn.style.cursor = "pointer";
-        alert("ভিডিও দেখা শেষ! এখন বোনাস সংগ্রহ করুন।");
-    });
-}
-
-function claimVideoReward() {
-    balance += 15.00; 
-    document.getElementById("balance").innerText = balance.toFixed(2);
-    alert("সফলভাবে আপনার অ্যাকাউন্টে ১৫.০০ টাকা যোগ করা হয়েছে!");
-    switchTab('home');
-    
-    claimBtn.disabled = true;
-    claimBtn.classList.add('locked-btn');
-    claimBtn.style.background = "#cbd5e0";
-}
-
-function selectMethod(btn) {
+// পেমেন্ট মেথড সিলেক্ট করার সময় বাইন্যান্স ক্রিপ্টো লিস্ট এবং ইনপুট ফিল্ড পরিবর্তনের লজিক
+function selectMethod(btn, method) {
     document.querySelectorAll('.method-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
+
+    let cryptoContainer = document.getElementById('crypto-select-container');
+    let accountLabel = document.getElementById('account-label');
+    let accountInput = document.getElementById('account-input');
+
+    if (method === 'binance') {
+        cryptoContainer.style.display = 'block';
+        accountLabel.innerText = "বাইন্যান্স ওয়ালেট অ্যাড্রেস / Pay ID";
+        accountInput.placeholder = "Enter Wallet Address or Pay ID";
+    } else {
+        cryptoContainer.style.display = 'none';
+        accountLabel.innerText = "অ্যাকাউন্ট নম্বর (পার্সোনাল)";
+        accountInput.placeholder = "01XXX-XXXXXX";
+    }
 }
+
+// লাইভ উইথড্র টিকার (রেন্ডম ইউজার এবং ৪০০ টাকার উপরে রেন্ডম অ্যামাউন্ট)
+const liveNames = ["Riyad Vai", "Sakib Khan", "Tanvir Ahmed", "Rakibul Islam", "Mehedi Hasan", "Nayeem Hossain", "Arman Ali"];
+function updateLiveTicker() {
+    let randomName = liveNames[Math.floor(Math.random() * liveNames.length)];
+    let randomAmount = (Math.random() * (1500 - 400) + 400).toFixed(2); // ৪০০ থেকে ১৫০০ টাকার মধ্যে রেন্ডম এমাউন্ট
+    
+    document.getElementById("live-user").innerText = randomName;
+    document.getElementById("live-amount").innerText = randomAmount + " ৳";
+}
+
+// প্রতি ৫ সেকেন্ড পর পর লাইভ উইথড্র নাম ও এমাউন্ট পরিবর্তন হবে
+setInterval(updateLiveTicker, 5000);
