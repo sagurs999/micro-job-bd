@@ -1,14 +1,14 @@
 let tg = window.Telegram.WebApp;
 tg.expand(); 
 
-// টেলিগ্রাম ব্যাক বাটন কনফিগারেশন (যাতে যেকোনো পেজে ঢুকলে ব্যাক বাটন কাজ করে)
+// টেলিগ্রাম ব্যাক বাটন কনফিগারেশন
 tg.BackButton.show();
 tg.BackButton.onClick(() => {
     let activeTab = document.querySelector('.tab-pane.active').id;
     if (activeTab !== 'tab-home') {
-        switchTab('home'); // হোম পেজে ফিরিয়ে নিয়ে আসবে
+        switchTab('home'); 
     } else {
-        tg.close(); // হোম পেজে থাকলে অ্যাপ ক্লোড বা ব্যাক করবে
+        tg.close(); 
     }
 });
 
@@ -25,17 +25,12 @@ document.getElementById("username").innerText = currentUsername;
 document.getElementById("user-initial").innerText = currentUsername.charAt(0).toUpperCase();
 document.getElementById("user-id").innerText = currentUserId;
 
-// রেফার লিংক সেট করা (আপনার দেওয়া বটের লিংক অনুযায়ী)
+// রেফার লিংক সেট করা
 document.getElementById("my-refer-link").value = `https://t.me/microjobbd80bot?start=ref_${currentUserId}`;
 
-// লোকালস্টোরেজ থেকে রিয়েল ডাটা লোড করা
 let allUsers = JSON.parse(localStorage.getItem('micro_job_all_users')) || {};
 
 if (!allUsers[currentUserId]) {
-    // চেক করা ইউজার নতুন কি না এবং রেফার লিংক থেকে এসেছে কি না
-    let urlParams = new URLSearchParams(window.location.search);
-    let startParam = urlParams.get('start'); // অথবা টেলিগ্রাম থেকে পাওয়া স্টার্ট পেলোড
-    
     let initialBal = 225.00;
     let initialRef = 0;
 
@@ -113,7 +108,6 @@ function submitWithdraw() {
 function updateLeaderboardData() {
     saveDataToStorage();
     
-    // রিয়েল ইউজারদের তালিকা তৈরি (কোনো ফেক বা রেন্ডম নাম থাকবে না)
     let userList = Object.values(allUsers);
     userList.sort((a, b) => b.tasks - a.tasks || b.balance - a.balance);
 
@@ -174,7 +168,8 @@ function startTaskTimer() {
 }
 
 function openDirectAd() {
-    alert("অ্যাড পেজে রিডাইরেক্ট করা হচ্ছে। ২০ সেকেন্ড অপেক্ষা করুন!");
+    // আপনার দেওয়া প্রথম ডাইরেক্ট লিংক অ্যাড এখানে সেট করা হয়েছে
+    window.open("https://www.profitableratecpmnetwork.com/fe5xzx71?key=8df7b21391b5943a775b558dc91e6fa9", "_blank");
 }
 
 function cancelTask() {
