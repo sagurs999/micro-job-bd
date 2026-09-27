@@ -189,7 +189,7 @@
 
             <!-- 4. TOP USERS TAB -->
             <div id="tab-top" class="tab-pane">
-                <div class="section-title">লিডারবোর্ড (সেরা ১০ জন ইউজার)</div>
+                <div class="section-title">লিডারবোর্ড (রিয়েল ইউজারগণ)</div>
                 <div id="leaderboard-list"></div>
             </div>
 
@@ -239,10 +239,6 @@
                     
                     <button class="primary-btn" style="margin-top: 10px;" onclick="submitWithdraw()">উইথড্র রিকোয়েস্ট পাঠান</button>
                 </div>
-
-                <div id="locked-notice-box" style="background: #e2e8f0; color: #475569; padding: 10px; border-radius: 8px; text-align: center; font-weight: bold; margin-top: 10px; font-size: 11px;">
-                    <i class="fa-solid fa-lock"></i> ৭টি রেফার এবং ৪০০ টাকা ব্যালেন্স হলে উইথড্র সম্পন্ন করতে পারবেন।
-                </div>
             </div>
 
             <!-- 6. HISTORY TAB -->
@@ -261,12 +257,12 @@
                     <i class="fa-solid fa-users" style="font-size: 24px; color: #0284c7; margin-bottom: 5px;"></i>
                     <h4 style="font-size: 13px; color: #0369a1;">মোট সফল রেফার</h4>
                     <h2 style="font-size: 22px; color: #0284c7; margin-top: 2px;" id="total-refer-count">০ জন</h2>
-                    <p style="font-size: 10px; color: #475569; margin-top: 4px;">উইথড্র আনলক করতে অন্তত ৭ জনকে রেফার করুন।</p>
+                    <p style="font-size: 10px; color: #475569; margin-top: 4px;">রেফার করলে রেফারকারী ৩০ টাকা এবং নতুন ইউজার ২০ টাকা পাবেন।</p>
                 </div>
 
                 <div class="card-box">
                     <p style="font-size: 12px; margin-bottom: 8px;">আপনার রেফার লিংক:</p>
-                    <input type="text" value="https://t.me/MicroJobBDBot?start=ref_8596" readonly style="width:100%; padding:8px; background:#eee; border:1px solid #ccc; border-radius:5px; font-size:12px;">
+                    <input type="text" id="my-refer-link" readonly style="width:100%; padding:8px; background:#eee; border:1px solid #ccc; border-radius:5px; font-size:12px;">
                 </div>
             </div>
 
