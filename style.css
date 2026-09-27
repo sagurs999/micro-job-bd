@@ -380,19 +380,6 @@ body {
     font-size: 11px;
 }
 
-.locked-btn-action {
-    width: 100%;
-    background: #cbd5e0;
-    color: #475569;
-    border: none;
-    padding: 10px;
-    border-radius: 8px;
-    font-weight: bold;
-    margin-top: 10px;
-    cursor: not-allowed;
-    font-size: 12px;
-}
-
 .leaderboard-item {
     display: flex;
     justify-content: space-between;
