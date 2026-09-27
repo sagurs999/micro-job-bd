@@ -12,10 +12,10 @@
 
     <div class="app-container">
         
-        <!-- Header with Small Logo -->
+        <!-- Header with New Logo -->
         <div class="header">
             <div class="logo-title">
-                <img src="https://i.ibb.co.com/7d4z08W/logo.png" alt="Logo" class="header-logo"> <!-- আপনার লোগো ইমেজ লিংক বা লোকাল ফাইল নেম দিন -->
+                <img src="https://i.ibb.co/ycYMXmQv/Chat-GPT-Image-Sep-28-2026-12-01-01-AM.png" alt="Logo" class="header-logo">
                 <span>Micro Job BD</span>
             </div>
             <div class="min-withdraw-badge">সর্বনিম্ন উইথড্র: 400.00 Tk</div>
@@ -208,7 +208,7 @@
                     <p style="font-size: 11px; color: #64748b; margin-top: 4px;" id="cond-refer">❌ কমপক্ষে ৭টি রেফার করতে হবে (বর্তমান: <span id="curr-ref-val">0</span>/7)</p>
                 </div>
 
-                <div class="card-box withdraw-form" id="withdraw-form-section" style="opacity: 0.6; pointer-events: none;">
+                <div class="card-box withdraw-form" id="withdraw-form-section">
                     <label>পেমেন্ট মেথড সিলেক্ট করুন</label>
                     <div class="methods">
                         <button class="method-btn active" onclick="selectMethod(this, 'bkash')">
@@ -235,12 +235,14 @@
                     <input type="text" id="account-input" placeholder="01XXX-XXXXXX">
                     
                     <label>পরিমাণ (Tk)</label>
-                    <input type="number" placeholder="কমপক্ষে 400.00">
+                    <input type="number" id="withdraw-amount-input" placeholder="কমপক্ষে 400.00">
                     
-                    <button class="primary-btn" style="margin-top: 10px;">উইথড্র রিকোয়েস্ট পাঠান</button>
+                    <button class="primary-btn" style="margin-top: 10px;" onclick="submitWithdraw()">উইথড্র রিকোয়েস্ট পাঠান</button>
                 </div>
 
-                <button id="locked-notice-btn" class="locked-btn-action"><i class="fa-solid fa-lock"></i> ৭টি রেফার এবং ৪০০ টাকা ব্যালেন্স হলে আনলক হবে</button>
+                <div id="locked-notice-box" style="background: #e2e8f0; color: #475569; padding: 10px; border-radius: 8px; text-align: center; font-weight: bold; margin-top: 10px; font-size: 11px;">
+                    <i class="fa-solid fa-lock"></i> ৭টি রেফার এবং ৪০০ টাকা ব্যালেন্স হলে উইথড্র সম্পন্ন করতে পারবেন।
+                </div>
             </div>
 
             <!-- 6. HISTORY TAB -->
