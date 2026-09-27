@@ -10,16 +10,18 @@
 </head>
 <body>
 
-    <!-- Main Container -->
     <div class="app-container">
         
-        <!-- TOP HEADER -->
+        <!-- Header -->
         <div class="header">
-            <h2>Micro Job BD</h2>
+            <div class="logo-title">
+                <i class="fa-solid fa-shield-halved"></i>
+                <span>Micro Job BD</span>
+            </div>
             <div class="min-withdraw-badge">সর্বনিম্ন উইথড্র: 400.00 Tk</div>
         </div>
 
-        <!-- USER PROFILE CARD -->
+        <!-- Profile Card -->
         <div class="profile-card">
             <div class="user-info">
                 <div class="avatar" id="user-initial">M</div>
@@ -29,51 +31,50 @@
                 </div>
             </div>
             <div class="balance-box">
-                <i class="fa-solid fa-wallet"></i>
                 <span id="balance">225.00</span> Tk
             </div>
         </div>
 
-        <!-- TABS CONTENT AREA -->
-        <div id="content-area" class="content-area">
-            
-            <!-- Home Tab (Default) -->
-            <div id="tab-home" class="tab-content active">
+        <!-- Main Content Area (Tabs) -->
+        <div class="content-area">
+
+            <!-- 1. HOME TAB -->
+            <div id="tab-home" class="tab-pane active">
                 <div class="grid-menu">
                     <div class="menu-card" onclick="switchTab('tasks')">
-                        <i class="fa-solid fa-play-circle"></i>
+                        <i class="fa-solid fa-play-circle" style="color: #2563eb;"></i>
                         <span>Start Task</span>
                     </div>
                     <div class="menu-card" onclick="alert('Profile Section')">
-                        <i class="fa-solid fa-user"></i>
+                        <i class="fa-solid fa-user" style="color: #2563eb;"></i>
                         <span>Profile</span>
                     </div>
                     <div class="menu-card" onclick="switchTab('video')">
-                        <i class="fa-solid fa-video"></i>
+                        <i class="fa-solid fa-video" style="color: #2563eb;"></i>
                         <span>Work Video</span>
                     </div>
                     <div class="menu-card" onclick="switchTab('top')">
-                        <i class="fa-solid fa-chart-simple"></i>
+                        <i class="fa-solid fa-chart-simple" style="color: #2563eb;"></i>
                         <span>Top Users</span>
                     </div>
                     <div class="menu-card" onclick="switchTab('withdraw')">
-                        <i class="fa-solid fa-money-bill-transfer"></i>
+                        <i class="fa-solid fa-wallet" style="color: #2563eb;"></i>
                         <span>Withdraw</span>
                     </div>
-                    <div class="menu-card" onclick="alert('History')">
-                        <i class="fa-solid fa-clock-rotate-left"></i>
+                    <div class="menu-card" onclick="switchTab('history')">
+                        <i class="fa-solid fa-clock-rotate-left" style="color: #2563eb;"></i>
                         <span>History</span>
                     </div>
-                    <div class="menu-card" onclick="alert('Referral System')">
-                        <i class="fa-solid fa-users"></i>
+                    <div class="menu-card" onclick="switchTab('refer')">
+                        <i class="fa-solid fa-users" style="color: #2563eb;"></i>
                         <span>Refer</span>
                     </div>
                     <div class="menu-card" onclick="alert('Channel Link')">
-                        <i class="fa-solid fa-bullhorn"></i>
+                        <i class="fa-solid fa-bullhorn" style="color: #2563eb;"></i>
                         <span>Channel</span>
                     </div>
                     <div class="menu-card" onclick="alert('Support Chat')">
-                        <i class="fa-solid fa-headset"></i>
+                        <i class="fa-solid fa-headset" style="color: #2563eb;"></i>
                         <span>Support</span>
                     </div>
                 </div>
@@ -90,32 +91,38 @@
                 </div>
             </div>
 
-            <!-- Tasks Tab -->
-            <div id="tab-tasks" class="tab-content">
-                <h3>দয়া করে নিচের টাস্কটি সম্পন্ন করুন</h3>
-                <button class="primary-btn" onclick="completeTask()">টাস্ক সম্পন্ন করুন (+15 Tk)</button>
-            </div>
-
-            <!-- Work Video / Ad Watch Tab -->
-            <div id="tab-video" class="tab-content">
-                <h3>কিভাবে কাজ করবেন ভিডিও দেখুন</h3>
-                <p style="font-size: 13px; color: #666; margin-bottom: 15px;">নিচের ভিডিওটি সম্পূর্ণ দেখে কাজ সম্পন্ন করুন।</p>
-                
-                <div class="video-container" style="background: #000; border-radius: 10px; overflow: hidden; margin-bottom: 15px; text-align: center;">
-                    <video id="task-video" width="100%" height="200" controls>
-                        <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
-                        আপনার ব্রাউজার ভিডিও সাপোর্ট করে না।
-                    </video>
+            <!-- 2. TASKS TAB -->
+            <div id="tab-tasks" class="tab-pane">
+                <div class="section-title">টাস্ক পেজ</div>
+                <div class="card-box">
+                    <p>দয়া করে নিচের টাস্কটি সম্পন্ন করুন</p>
+                    <button class="primary-btn" onclick="completeTask()">টাস্ক সম্পন্ন করুন (+15 Tk)</button>
                 </div>
-
-                <button class="primary-btn" id="claim-reward-btn" onclick="claimVideoReward()" disabled style="background: #cbd5e0; cursor: not-allowed;">
-                    ভিডিও সম্পূর্ণ দেখলে বোনাস সংগ্রহ করুন (+15 Tk)
-                </button>
             </div>
 
-            <!-- Top Users Tab -->
-            <div id="tab-top" class="tab-content">
-                <h3>লিডারবোর্ড (সেরা ১০ জন ইউজার)</h3>
+            <!-- 3. WORK VIDEO TAB (এখানে আপনার এড বা ভিডিও লিংক বসাতে পারবেন) -->
+            <div id="tab-video" class="tab-pane">
+                <div class="section-title">কিভাবে কাজ করবেন ভিডিও দেখুন</div>
+                <div class="card-box">
+                    <p style="font-size: 13px; color: #666; margin-bottom: 10px;">নিচের ভিডিওটি সম্পূর্ণ দেখে কাজ সম্পন্ন করুন।</p>
+                    
+                    <!-- ভিডিও বা এড এর লিংক এখানে পরিবর্তন করতে পারবেন -->
+                    <div class="video-container">
+                        <video id="task-video" width="100%" height="200" controls>
+                            <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+                            আপনার ব্রাউজার ভিডিও সাপোর্ট করে না।
+                        </video>
+                    </div>
+
+                    <button class="primary-btn locked-btn" id="claim-reward-btn" onclick="claimVideoReward()" disabled>
+                        ভিডিও সম্পূর্ণ দেখলে বোনাস সংগ্রহ করুন (+15 Tk)
+                    </button>
+                </div>
+            </div>
+
+            <!-- 4. TOP USERS TAB -->
+            <div id="tab-top" class="tab-pane">
+                <div class="section-title">লিডারবোর্ড (সেরা ১০ জন ইউজার)</div>
                 <div class="leaderboard-item">
                     <span>#1 Micro Job BD</span>
                     <span>1000.00 Tk</span>
@@ -126,25 +133,47 @@
                 </div>
             </div>
 
-            <!-- Withdraw Tab -->
-            <div id="tab-withdraw" class="tab-content">
-                <h3>টাকা তুলুন</h3>
-                <div class="withdraw-form">
+            <!-- 5. WITHDRAW TAB (বিকাশ ও নগদ লোগো সহ) -->
+            <div id="tab-withdraw" class="tab-pane">
+                <div class="section-title">টাকা তুলুন</div>
+                <div class="card-box withdraw-form">
                     <label>পেমেন্ট মেথড সিলেক্ট করুন</label>
                     <div class="methods">
-                        <button class="method-btn active">bKash</button>
-                        <button class="method-btn">Nagad</button>
+                        <button class="method-btn active" onclick="selectMethod(this)">
+                            <span style="color: #e2136e; font-weight: bold;">bKash</span>
+                        </button>
+                        <button class="method-btn" onclick="selectMethod(this)">
+                            <span style="color: #f7931e; font-weight: bold;">Nagad</span>
+                        </button>
                     </div>
                     <label>অ্যাকাউন্ট নম্বর (পার্সোনাল)</label>
                     <input type="text" placeholder="01XXX-XXXXXX">
                     <label>পরিমাণ (Tk)</label>
                     <input type="number" placeholder="কমপক্ষে 400.00">
-                    <button class="locked-btn"><i class="fa-solid fa-lock"></i> অপশনটি লক করা আছে</button>
+                    <button class="locked-btn-action"><i class="fa-solid fa-lock"></i> অপশনটি লক করা আছে</button>
                 </div>
             </div>
+
+            <!-- 6. HISTORY TAB -->
+            <div id="tab-history" class="tab-pane">
+                <div class="section-title">ট্রানজ্যাকশন হিস্টরি</div>
+                <div class="card-box" style="text-align: center; color: #777;">
+                    <p>আপনার কোনো উইথড্র বা ট্রানজ্যাকশন হিস্টরি নেই।</p>
+                </div>
+            </div>
+
+            <!-- 7. REFER TAB -->
+            <div id="tab-refer" class="tab-pane">
+                <div class="section-title">রেফার এবং ইনকাম</div>
+                <div class="card-box">
+                    <p>আপনার রেফার লিংক:</p>
+                    <input type="text" value="https://t.me/MicroJobBDBot?start=ref_8596" readonly style="width:100%; padding:8px; margin-top:8px; background:#eee; border:1px solid #ccc; border-radius:5px;">
+                </div>
+            </div>
+
         </div>
 
-        <!-- BOTTOM NAVIGATION BAR -->
+        <!-- Bottom Navigation Bar -->
         <div class="bottom-nav">
             <div class="nav-item active" onclick="switchTab('home')">
                 <i class="fa-solid fa-house"></i>
