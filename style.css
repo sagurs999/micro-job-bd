@@ -18,7 +18,7 @@ body {
     width: 100%;
     max-width: 480px;
     height: 100vh;
-    background: #0284c7; /* টেলিগ্রাম বট থিম কালার */
+    background: #0284c7;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -43,6 +43,15 @@ body {
     gap: 8px;
     font-size: 17px;
     font-weight: bold;
+}
+
+/* Header Logo Styling */
+.header-logo {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1.5px solid white;
 }
 
 .min-withdraw-badge {
@@ -186,7 +195,6 @@ body {
     margin-bottom: 10px;
 }
 
-/* Attractive Live Withdraw Ticker Styles */
 .live-withdraw-ticker {
     background: white;
     border: 1px solid #e2e8f0;
@@ -397,7 +405,6 @@ body {
     border: 1px solid #e2e8f0;
 }
 
-/* Bottom Navigation Bar strictly in one frame */
 .bottom-nav {
     display: flex;
     justify-content: space-around;
@@ -435,7 +442,6 @@ body {
     margin-bottom: 10px;
 }
 
-/* Modal and Timer Styles for Start Work Ad & 20s Countdown */
 .modal-overlay {
     position: absolute;
     top: 0;
@@ -457,14 +463,6 @@ body {
     border-radius: 12px;
     text-align: center;
     box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-}
-
-.modal-ad-box {
-    background: #f1f5f9;
-    border: 2px dashed #cbd5e1;
-    padding: 20px;
-    border-radius: 8px;
-    margin: 12px 0;
 }
 
 .timer-display {
