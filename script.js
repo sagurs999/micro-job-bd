@@ -1,22 +1,62 @@
 let tg = window.Telegram.WebApp;
 tg.expand(); 
 
+// টেলিগ্রাম ব্যাক বাটন কনফিগারেশন (যাতে যেকোনো পেজে ঢুকলে ব্যাক বাটন কাজ করে)
+tg.BackButton.show();
+tg.BackButton.onClick(() => {
+    let activeTab = document.querySelector('.tab-pane.active').id;
+    if (activeTab !== 'tab-home') {
+        switchTab('home'); // হোম পেজে ফিরিয়ে নিয়ে আসবে
+    } else {
+        tg.close(); // হোম পেজে থাকলে অ্যাপ ক্লোড বা ব্যাক করবে
+    }
+});
+
 let user = tg.initDataUnsafe.user;
-let currentUsername = "MD SAKIB";
-let currentUserId = "8596514126";
+let currentUsername = "online earning";
+let currentUserId = "5889828569";
 
 if (user) {
     currentUsername = user.first_name;
     currentUserId = user.id;
-    document.getElementById("username").innerText = currentUsername;
-    document.getElementById("user-initial").innerText = currentUsername.charAt(0).toUpperCase();
-    document.getElementById("user-id").innerText = currentUserId;
 }
 
-let balance = 225.00;
-let referralCount = 2; 
-let completedTasks = 0;
+document.getElementById("username").innerText = currentUsername;
+document.getElementById("user-initial").innerText = currentUsername.charAt(0).toUpperCase();
+document.getElementById("user-id").innerText = currentUserId;
+
+// রেফার লিংক সেট করা (আপনার দেওয়া বটের লিংক অনুযায়ী)
+document.getElementById("my-refer-link").value = `https://t.me/microjobbd80bot?start=ref_${currentUserId}`;
+
+// লোকালস্টোরেজ থেকে রিয়েল ডাটা লোড করা
+let allUsers = JSON.parse(localStorage.getItem('micro_job_all_users')) || {};
+
+if (!allUsers[currentUserId]) {
+    // চেক করা ইউজার নতুন কি না এবং রেফার লিংক থেকে এসেছে কি না
+    let urlParams = new URLSearchParams(window.location.search);
+    let startParam = urlParams.get('start'); // অথবা টেলিগ্রাম থেকে পাওয়া স্টার্ট পেলোড
+    
+    let initialBal = 225.00;
+    let initialRef = 0;
+
+    allUsers[currentUserId] = {
+        name: currentUsername,
+        id: currentUserId,
+        balance: initialBal,
+        referrals: initialRef,
+        tasks: 0
+    };
+    localStorage.setItem('micro_job_all_users', JSON.stringify(allUsers));
+}
+
+let currentUserData = allUsers[currentUserId];
+let balance = currentUserData.balance;
+let referralCount = currentUserData.referrals;
+let completedTasks = currentUserData.tasks;
 const maxTasks = 15;
+
+document.getElementById("balance").innerText = balance.toFixed(2);
+document.getElementById("withdraw-balance").innerText = balance.toFixed(2) + " Tk";
 
 function checkWithdrawUnlock() {
     document.getElementById("curr-bal-val").innerText = balance.toFixed(2);
@@ -48,6 +88,17 @@ function checkWithdrawUnlock() {
 
 checkWithdrawUnlock();
 
+function saveDataToStorage() {
+    allUsers[currentUserId] = {
+        name: currentUsername,
+        id: currentUserId,
+        balance: balance,
+        referrals: referralCount,
+        tasks: completedTasks
+    };
+    localStorage.setItem('micro_job_all_users', JSON.stringify(allUsers));
+}
+
 function submitWithdraw() {
     let balCheck = balance >= 400;
     let refCheck = referralCount >= 7;
@@ -59,25 +110,15 @@ function submitWithdraw() {
     alert("উইথড্র রিকোয়েস্ট সফলভাবে জমা হয়েছে!");
 }
 
-let leaderboardData = JSON.parse(localStorage.getItem('micro_job_leaderboard')) || [
-    { name: "Micro Job BD", balance: 1000.00, tasks: 50 },
-    { name: "Arafat Islam", balance: 77.33, tasks: 5 },
-    { name: currentUsername, balance: balance, tasks: completedTasks }
-];
-
 function updateLeaderboardData() {
-    let existingUser = leaderboardData.find(u => u.name === currentUsername);
-    if (existingUser) {
-        existingUser.balance = balance;
-        existingUser.tasks = completedTasks;
-    } else {
-        leaderboardData.push({ name: currentUsername, balance: balance, tasks: completedTasks });
-    }
-
-    leaderboardData.sort((a, b) => b.tasks - a.tasks || b.balance - a.balance);
+    saveDataToStorage();
+    
+    // রিয়েল ইউজারদের তালিকা তৈরি (কোনো ফেক বা রেন্ডম নাম থাকবে না)
+    let userList = Object.values(allUsers);
+    userList.sort((a, b) => b.tasks - a.tasks || b.balance - a.balance);
 
     let listHTML = "";
-    leaderboardData.slice(0, 10).forEach((item, index) => {
+    userList.slice(0, 10).forEach((item, index) => {
         listHTML += `
             <div class="leaderboard-item">
                 <span>#${index + 1} ${item.name}</span>
@@ -86,7 +127,6 @@ function updateLeaderboardData() {
         `;
     });
     document.getElementById("leaderboard-list").innerHTML = listHTML;
-    localStorage.setItem('micro_job_leaderboard', JSON.stringify(leaderboardData));
 }
 
 updateLeaderboardData();
@@ -196,7 +236,7 @@ function selectMethod(btn, method) {
     }
 }
 
-const liveNames = ["Riyad Vai", "Sakib Khan", "Tanvir Ahmed", "Rakibul Islam", "Mehedi Hasan", "Nayeem Hossain", "Arman Ali"];
+const liveNames = [currentUsername, "Riyad Vai", "Sakib Khan"];
 function updateLiveTicker() {
     let randomName = liveNames[Math.floor(Math.random() * liveNames.length)];
     let randomAmount = (Math.random() * (1500 - 400) + 400).toFixed(2);
