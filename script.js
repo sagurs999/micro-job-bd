@@ -1,14 +1,20 @@
 let tg = window.Telegram.WebApp;
 tg.expand(); 
 
-// টেলিগ্রাম ব্যাক বাটন কনফিগারেশন
-tg.BackButton.show();
+// ব্যাক বাটন লজিক: হোম পেজ ছাড়া অন্য যেকোনো পেজে থাকলে ব্যাক বাটনে ক্লিক করলে হোমে আসবে
+function updateBackButtonVisibility() {
+    let activeTab = document.querySelector('.tab-pane.active').id;
+    if (activeTab !== 'tab-home') {
+        tg.BackButton.show();
+    } else {
+        tg.BackButton.hide();
+    }
+}
+
 tg.BackButton.onClick(() => {
     let activeTab = document.querySelector('.tab-pane.active').id;
     if (activeTab !== 'tab-home') {
         switchTab('home'); 
-    } else {
-        tg.close(); 
     }
 });
 
@@ -25,7 +31,6 @@ document.getElementById("username").innerText = currentUsername;
 document.getElementById("user-initial").innerText = currentUsername.charAt(0).toUpperCase();
 document.getElementById("user-id").innerText = currentUserId;
 
-// রেফার লিংক সেট করা
 document.getElementById("my-refer-link").value = `https://t.me/microjobbd80bot?start=ref_${currentUserId}`;
 
 let allUsers = JSON.parse(localStorage.getItem('micro_job_all_users')) || {};
@@ -145,6 +150,8 @@ function switchTab(tabId) {
         document.querySelectorAll('.nav-item')[3].classList.add('active');
         checkWithdrawUnlock();
     }
+
+    updateBackButtonVisibility();
 }
 
 let countdownInterval;
@@ -167,9 +174,13 @@ function startTaskTimer() {
     }, 1000);
 }
 
-function openDirectAd() {
-    // আপনার দেওয়া প্রথম ডাইরেক্ট লিংক অ্যাড এখানে সেট করা হয়েছে
-    window.open("https://www.profitableratecpmnetwork.com/fe5xzx71?key=8df7b21391b5943a775b558dc91e6fa9", "_blank");
+function openDirectAd(type) {
+    // আপনার দেওয়া দুটি ডাইরেক্ট অ্যাড লিংক এখানে যুক্ত করা হলো
+    if (type === 1) {
+        window.open("https://www.profitableratecpmnetwork.com/fe5xzx71?key=8df7b21391b5943a775b558dc91e6fa9", "_blank");
+    } else {
+        window.open("https://www.profitableratecpmnetwork.com/m7xk7v5i?key=29f52e0125fd58eab0283bb2649246b8", "_blank");
+    }
 }
 
 function cancelTask() {
@@ -241,3 +252,4 @@ function updateLiveTicker() {
 }
 
 setInterval(updateLiveTicker, 5000);
+updateBackButtonVisibility();
