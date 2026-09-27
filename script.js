@@ -1,7 +1,6 @@
 let tg = window.Telegram.WebApp;
 tg.expand(); 
 
-// টেলিগ্রাম থেকে ইউজারের নাম এবং আইডি অটো শো করা
 let user = tg.initDataUnsafe.user;
 let currentUsername = "MD SAKIB";
 let currentUserId = "8596514126";
@@ -15,10 +14,53 @@ if (user) {
 }
 
 let balance = 225.00;
+let referralCount = 2; 
 let completedTasks = 0;
 const maxTasks = 15;
 
-// লোকাল বা গ্লোবাল লিডারবোর্ড ডেটা ম্যানেজমেন্ট (রিয়াল ইউজারদের কাজের ভিত্তিতে টপ লিস্ট)
+function checkWithdrawUnlock() {
+    document.getElementById("curr-bal-val").innerText = balance.toFixed(2);
+    document.getElementById("curr-ref-val").innerText = referralCount;
+    document.getElementById("total-refer-count").innerText = referralCount + " জন";
+
+    let balCheck = balance >= 400;
+    let refCheck = referralCount >= 7;
+
+    let balCondElem = document.getElementById("cond-balance");
+    let refCondElem = document.getElementById("cond-refer");
+
+    if (balCheck) {
+        balCondElem.innerHTML = "✅ ব্যালেন্স কমপক্ষে ৪০০ টাকা হয়েছে";
+        balCondElem.style.color = "#16a34a";
+    } else {
+        balCondElem.innerHTML = `❌ ব্যালেন্স কমপক্ষে ৪০০ টাকা হতে হবে (বর্তমান: ${balance.toFixed(2)} Tk)`;
+        balCondElem.style.color = "#dc2626";
+    }
+
+    if (refCheck) {
+        refCondElem.innerHTML = "✅ কমপক্ষে ৭টি রেফার সম্পন্ন হয়েছে";
+        refCondElem.style.color = "#16a34a";
+    } else {
+        refCondElem.innerHTML = `❌ কমপক্ষে ৭টি রেফার করতে হবে (বর্তমান: ${referralCount}/7)`;
+        refCondElem.style.color = "#dc2626";
+    }
+
+    let withdrawForm = document.getElementById("withdraw-form-section");
+    let lockedBtn = document.getElementById("locked-notice-btn");
+
+    if (balCheck && refCheck) {
+        withdrawForm.style.opacity = "1";
+        withdrawForm.style.pointerEvents = "auto";
+        lockedBtn.style.display = "none";
+    } else {
+        withdrawForm.style.opacity = "0.6";
+        withdrawForm.style.pointerEvents = "none";
+        lockedBtn.style.display = "block";
+    }
+}
+
+checkWithdrawUnlock();
+
 let leaderboardData = JSON.parse(localStorage.getItem('micro_job_leaderboard')) || [
     { name: "Micro Job BD", balance: 1000.00, tasks: 50 },
     { name: "Arafat Islam", balance: 77.33, tasks: 5 },
@@ -26,7 +68,6 @@ let leaderboardData = JSON.parse(localStorage.getItem('micro_job_leaderboard')) 
 ];
 
 function updateLeaderboardData() {
-    // ইউজারের ডাটা আপডেট বা যোগ করা
     let existingUser = leaderboardData.find(u => u.name === currentUsername);
     if (existingUser) {
         existingUser.balance = balance;
@@ -35,10 +76,8 @@ function updateLeaderboardData() {
         leaderboardData.push({ name: currentUsername, balance: balance, tasks: completedTasks });
     }
 
-    // কাজের সংখ্যা বা ব্যালেন্স অনুযায়ী ডিসেন্ডিং অর্ডারে সর্ট করা
     leaderboardData.sort((a, b) => b.tasks - a.tasks || b.balance - a.balance);
 
-    // টপ ১০ জনের লিস্ট রেন্ডার করা
     let listHTML = "";
     leaderboardData.slice(0, 10).forEach((item, index) => {
         listHTML += `
@@ -52,7 +91,6 @@ function updateLeaderboardData() {
     localStorage.setItem('micro_job_leaderboard', JSON.stringify(leaderboardData));
 }
 
-// ইনিশিয়ালি লিডারবোর্ড লোড করা
 updateLeaderboardData();
 
 function switchTab(tabId) {
@@ -69,12 +107,14 @@ function switchTab(tabId) {
     if(tabId === 'tasks') document.querySelectorAll('.nav-item')[1].classList.add('active');
     if(tabId === 'top') {
         document.querySelectorAll('.nav-item')[2].classList.add('active');
-        updateLeaderboardData(); // টপ ট্যাবে গেলে লিডারবোর্ড আপডেট হবে
+        updateLeaderboardData();
     }
-    if(tabId === 'withdraw') document.querySelectorAll('.nav-item')[3].classList.add('active');
+    if(tabId === 'withdraw') {
+        document.querySelectorAll('.nav-item')[3].classList.add('active');
+        checkWithdrawUnlock();
+    }
 }
 
-// Start Work & 20 Seconds Timer / Ad Logic
 let countdownInterval;
 let timeLeft = 20;
 
@@ -95,6 +135,10 @@ function startTaskTimer() {
     }, 1000);
 }
 
+function openDirectAd() {
+    alert("অ্যাড পেজে রিডাইরেক্ট করা হচ্ছে। ২০ সেকেন্ড অপেক্ষা করুন!");
+}
+
 function cancelTask() {
     clearInterval(countdownInterval);
     document.getElementById("task-modal").style.display = "none";
@@ -113,6 +157,7 @@ function completeTask() {
         let percentage = (completedTasks / maxTasks) * 100;
         document.getElementById("progress-fill").style.width = percentage + "%";
         
+        checkWithdrawUnlock();
         updateLeaderboardData();
         alert("অভিনন্দন! সফলভাবে টাস্ক সম্পন্ন হয়েছে এবং অ্যাকাউন্টে ১৫ টাকা যোগ হয়েছে।");
         switchTab('home');
@@ -121,7 +166,19 @@ function completeTask() {
     }
 }
 
-// পেমেন্ট মেথড সিলেক্ট করার লজিক (Binance & Crypto dropdown)
+function openProfileModal() {
+    document.getElementById("modal-username").innerText = currentUsername;
+    document.getElementById("modal-userid").innerText = currentUserId;
+    document.getElementById("modal-balance").innerText = balance.toFixed(2);
+    document.getElementById("modal-refer").innerText = referralCount;
+    document.getElementById("modal-tasks").innerText = completedTasks;
+    document.getElementById("profile-modal").style.display = "flex";
+}
+
+function closeProfileModal() {
+    document.getElementById("profile-modal").style.display = "none";
+}
+
 function selectMethod(btn, method) {
     document.querySelectorAll('.method-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
@@ -141,7 +198,6 @@ function selectMethod(btn, method) {
     }
 }
 
-// লাইভ উইথড্র টিকার
 const liveNames = ["Riyad Vai", "Sakib Khan", "Tanvir Ahmed", "Rakibul Islam", "Mehedi Hasan", "Nayeem Hossain", "Arman Ali"];
 function updateLiveTicker() {
     let randomName = liveNames[Math.floor(Math.random() * liveNames.length)];
