@@ -44,22 +44,20 @@ function checkWithdrawUnlock() {
         refCondElem.innerHTML = `❌ কমপক্ষে ৭টি রেফার করতে হবে (বর্তমান: ${referralCount}/7)`;
         refCondElem.style.color = "#dc2626";
     }
-
-    let withdrawForm = document.getElementById("withdraw-form-section");
-    let lockedBtn = document.getElementById("locked-notice-btn");
-
-    if (balCheck && refCheck) {
-        withdrawForm.style.opacity = "1";
-        withdrawForm.style.pointerEvents = "auto";
-        lockedBtn.style.display = "none";
-    } else {
-        withdrawForm.style.opacity = "0.6";
-        withdrawForm.style.pointerEvents = "none";
-        lockedBtn.style.display = "block";
-    }
 }
 
 checkWithdrawUnlock();
+
+function submitWithdraw() {
+    let balCheck = balance >= 400;
+    let refCheck = referralCount >= 7;
+
+    if (!balCheck || !refCheck) {
+        alert("উইথড্র করতে হলে কমপক্ষে ৭টি রেফার এবং ৪০০ টাকা ব্যালেন্স থাকতে হবে!");
+        return;
+    }
+    alert("উইথড্র রিকোয়েস্ট সফলভাবে জমা হয়েছে!");
+}
 
 let leaderboardData = JSON.parse(localStorage.getItem('micro_job_leaderboard')) || [
     { name: "Micro Job BD", balance: 1000.00, tasks: 50 },
